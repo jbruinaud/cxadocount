@@ -16,6 +16,19 @@ $ chmod +x ./cxadocount.sh
 $ ./cxadocount.sh
 </pre>
 
+# What does the script do?
+
+<pre>
+- List the projects from the ADO org
+  - For each project
+    - List the repositories
+    - For each repository
+      - Clone the repository locally
+      - Run cloc on the local clone folder
+      - Add the repo LOC to the output file
+      - Remove the local clone folder
+</pre>
+
 # Output example
 
 <pre>
