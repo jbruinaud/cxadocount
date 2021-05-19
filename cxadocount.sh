@@ -16,6 +16,8 @@
 ADOPAT=
 # Your ADO org name
 ADOORG=
+# You ADO URL
+ADOURL=https://dev.azure.com
 # The output file name
 RSFILE=./results.csv
 
@@ -34,7 +36,7 @@ echo "Project,Repo,Languages,Count" > ${RSFILE}
 B64PAT=$(printf "%s"":$ADOPAT" | base64)
 
 # For each project
-for I in $(curl -s -u :${ADOPAT} https://dev.azure.com/${ADOORG}/_apis/projects?api-version=6.0 | jq '.value[] | .name,.id' | sed -e "s/\"//g" | sed -e "s/ /_/g")
+for I in $(curl -s -u :${ADOPAT} ${ADOURL}/${ADOORG}/_apis/projects?api-version=6.0 | jq '.value[] | .name,.id' | sed -e "s/\"//g" | sed -e "s/ /_/g")
 do
 	# If project name
 	if [ $((C%2)) -eq 0 ];
@@ -45,7 +47,7 @@ do
 	else
 		# Else, process project id
 		# For each repo URL
-		for J in $(curl -s -u :${ADOPAT} https://dev.azure.com/${ADOORG}/${I}/_apis/git/repositories?api-version=6.0 | jq '.value[].webUrl' | sed -e "s/\"//g")
+		for J in $(curl -s -u :${ADOPAT} ${ADOURL}/${ADOORG}/${I}/_apis/git/repositories?api-version=6.0 | jq '.value[].webUrl' | sed -e "s/\"//g")
 		do
 			# Store repo URL
 			REPO=$J
